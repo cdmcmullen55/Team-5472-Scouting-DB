@@ -9,11 +9,11 @@ import java.util.Date;
 
 public class TBATeam {
 	
-	private String team_key;
 	private int team_number;
-	private STeam team;
-	private String team_name;
 	private TeamRequest request;
+	private STeam team;
+	private String team_key;
+	private String team_name;
 	private int wins;
 	private int losses;
 	private int ties;
@@ -29,12 +29,10 @@ public class TBATeam {
 		team = tba.getSTeam(team_number);
 		// Create TeamRequest object
 		request = new TeamRequest();
-	}
-	
-	public void parseTeam() {
 		team_key = team.getKey();
 		team_name = team.getNickname();
-		getWinLoss();
+		setWinLoss();
+		setOPR();
 	}
 	
 	public String getMostRecentEvent(int team) {
@@ -64,7 +62,7 @@ public class TBATeam {
 		return events[index].getKey();
 	}
 	
-	public void getWinLoss() {
+	public void setWinLoss() {
 		String event_key = getMostRecentEvent(team_number);
 		SMatch[] matches = request.getTeamEventSMatches(team_number, event_key);
 		int event_wins = 0;
@@ -95,7 +93,7 @@ public class TBATeam {
 		return "red";
 	}
 	
-	public void getOPR() {
+	public void setOPR() {
 		String event_key = getMostRecentEvent(team_number);
 		EventOPR[] oprs = new TBA().getOprs(event_key);
 		double opr = 0;
@@ -105,5 +103,29 @@ public class TBATeam {
 			}
 		}
 		OPR = opr;
+	}
+	
+	public String getTeamKey() {
+		return team_key;
+	}
+	
+	public String getTeamName() {
+		return team_name;
+	}
+	
+	public int getTeamWins() {
+		return wins;
+	}
+	
+	public int getTeamLosses() {
+		return losses;
+	}
+	
+	public int getTeamTies() {
+		return ties;
+	}
+	
+	public double getOPR() {
+		return OPR;
 	}
 }
