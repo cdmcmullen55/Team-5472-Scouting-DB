@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import localconstantstorage.ConnectionConstants;
+
 public class TBATeam {
 	
 	private int team_number;
@@ -23,7 +25,7 @@ public class TBATeam {
 		// TODO Auto-generated constructor stub
 		team_number = teamnumber;
 		// Set Authorization Key
-		TBA.setAuthToken("gB8DloeXdemPVOVhOLPkewJzcQjC3RVxfKilcBQpf9OIt168Pf8U5NWnNteSVLhc");
+		TBA.setAuthToken(ConnectionConstants.AUTH_KEY);
 		// Create TBA object
 		TBA tba = new TBA();
 		team = tba.getSTeam(team_number);
