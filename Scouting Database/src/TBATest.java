@@ -1,5 +1,6 @@
-//import from the TBA_API .jar 
+//import from the TBA-API-V3.jar 
 import main.*;
+
 
 public class TBATest{
    
@@ -9,7 +10,7 @@ public class TBATest{
       // Create TBA object
       TBA tba = new TBA();
       // Pull the team object (make sure to do this asynchronously if it updates an UI 
-      Object team = tba.customCall("team/frc5472");
+      Object team = tba.customCall("team/frc5472/events");
       // Each model has a handy .toString method
       System.out.println(team);
       }
