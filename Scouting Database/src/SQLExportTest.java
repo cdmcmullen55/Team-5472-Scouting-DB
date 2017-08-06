@@ -9,7 +9,7 @@ public class SQLExportTest{
       // Step 1: Load jTDS driver
       Class.forName("net.sourceforge.jtds.jdbc.Driver");
       // Step 2: Establish the connection to the database
-      String url = ConnectionConstants.AUTH_KEY; 
+      String url = ConnectionConstants.CONNECTION_STRING; 
       Connection conn = DriverManager.getConnection(url, ConnectionConstants.USER_ID, ConnectionConstants.PASS);  
       
       // Step 3: Create Statement object

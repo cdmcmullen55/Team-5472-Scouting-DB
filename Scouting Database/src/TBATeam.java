@@ -51,7 +51,7 @@ public class TBATeam {
 		for(int i=0; i < events.length; i++) {
 			Date date = new Date();
 			try {
-				date = sdf.parse(events[i].getEndDate());
+				date = sdf.parse(events[i].getStartDate());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

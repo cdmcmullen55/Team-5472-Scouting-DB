@@ -1,6 +1,7 @@
 //import from the TBA-API-V3.jar 
 import localconstantstorage.ConnectionConstants;
 import main.*;
+import models.simple.SEvent;
 
 public class TBATest{
    
@@ -9,7 +10,7 @@ public class TBATest{
       TBA.setAuthToken(ConnectionConstants.AUTH_KEY);
       // Create TBA object
       TBA tba = new TBA();
-      // Each model has a handy .toString method
-      System.out.println(tba.getTeamSEvents(1777));
+      SEvent[] events = tba.getTeamSEvents(5472);
+      System.out.println(events[0]);
       }
   }
