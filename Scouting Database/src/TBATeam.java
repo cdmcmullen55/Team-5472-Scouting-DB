@@ -20,6 +20,7 @@ public class TBATeam {
 	private int losses;
 	private int ties;
 	private double OPR;
+	private int years_competed;
 
 	public TBATeam(int teamnumber) {
 		// TODO Auto-generated constructor stub
@@ -33,8 +34,10 @@ public class TBATeam {
 		request = new TeamRequest();
 		team_key = team.getKey();
 		team_name = team.getNickname();
+		years_competed = tba.getYearsParticipated(team_number).length;
 		setWinLoss();
 		setOPR();
+		
 	}
 	
 	public String getMostRecentEvent(int team) {
@@ -129,5 +132,9 @@ public class TBATeam {
 	
 	public double getOPR() {
 		return OPR;
+	}
+	
+	public int getYearsParticipated() {
+		return years_competed;
 	}
 }
