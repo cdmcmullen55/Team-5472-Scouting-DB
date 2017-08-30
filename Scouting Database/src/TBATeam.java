@@ -11,6 +11,7 @@ import localconstantstorage.ConnectionConstants;
 
 public class TBATeam {
 	
+	//requested information about each team
 	private int team_number;
 	private TeamRequest request;
 	private STeam team;
@@ -27,29 +28,42 @@ public class TBATeam {
 		team_number = teamnumber;
 		// Set Authorization Key
 		TBA.setAuthToken(ConnectionConstants.AUTH_KEY);
-		// Create TBA object
+		// Create TBA object (from main.*)
 		TBA tba = new TBA();
+		// Retrieve Team object from Blue Alliance
 		team = tba.getSTeam(team_number);
 		// Create TeamRequest object
 		request = new TeamRequest();
+		// Retrieve team_key (primary key in DB)
 		team_key = team.getKey();
+		// Retrieve team_name
 		team_name = team.getNickname();
+		// Retrieve win/loss record
 		setWinLoss();
+		// Retrieve OPR
 		setOPR();
+		// Retrieve rookie year
 		setRookieYear();
 	}
 	
-	public String getMostRecentEvent(int team) {
+	// Returns event key for most recent event
+	private String getMostRecentEvent(int team) {
+		// Retrieve array of events team has participated in
 		SEvent[] events = request.getTeamSEvents(team);
+		// Set format for date parsing
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// Declare default date object
 		Date event_date = new Date();
+		// Try-catch in case the paser hits an error
 		try {
+			// Set event_date to "zero"
 			event_date = sdf.parse("0000-01-01");
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		int index =0;
+		// Loop parses the date for each event and compares to most recent date found
 		for(int i=0; i < events.length; i++) {
 			Date date = new Date();
 			try {
@@ -66,6 +80,8 @@ public class TBATeam {
 		return events[index].getKey();
 	}
 	
+	/* Returns event key for the first event participated in
+	(See getMostRecentEvent comments)*/
 	public String getFirstEvent(int team) {
 		SEvent[] events = request.getTeamSEvents(team);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
