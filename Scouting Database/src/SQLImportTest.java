@@ -1,4 +1,6 @@
 import java.sql.*;
+
+import localconstantstorage.ConnectionConstants;
 public class SQLImportTest {
 	public static void main (String[] args) { 
 	try
@@ -6,8 +8,8 @@ public class SQLImportTest {
 	   // Step 1: Load jTDS driver
 	   Class.forName("net.sourceforge.jtds.jdbc.Driver");
 	   // Step 2: Establish the connection to the database
-	   String url = "jdbc:jtds:sqlserver://localhost:1433/TestDB"; 
-	   Connection conn = DriverManager.getConnection(url, "", "");  
+	   String url = ConnectionConstants.CONNECTION_STRING; 
+	   Connection conn = DriverManager.getConnection(url, ConnectionConstants.USER_ID, ConnectionConstants.PASS);  
 	      
 	   // Step 3: Create Statement object (Type set to scrollable, read only)
 	   Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
