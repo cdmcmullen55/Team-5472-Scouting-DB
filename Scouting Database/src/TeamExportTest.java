@@ -10,7 +10,7 @@ public class TeamExportTest {
 		System.out.println("Losses: " + team.getTeamLosses());
 		System.out.println("Ties: " + team.getTeamTies());
 		System.out.println("OPR: " + team.getOPR());
-		System.out.println("Number of years participated:" + team.getYearsParticipated());
+		System.out.println("Rookie Year: " + team.getRookieYear());
 	}
 
 }

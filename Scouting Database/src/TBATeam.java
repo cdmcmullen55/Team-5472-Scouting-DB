@@ -20,7 +20,7 @@ public class TBATeam {
 	private int losses;
 	private int ties;
 	private double OPR;
-	private int years_competed;
+	private int rookie_year;
 
 	public TBATeam(int teamnumber) {
 		// TODO Auto-generated constructor stub
@@ -34,10 +34,9 @@ public class TBATeam {
 		request = new TeamRequest();
 		team_key = team.getKey();
 		team_name = team.getNickname();
-		years_competed = tba.getYearsParticipated(team_number).length;
 		setWinLoss();
 		setOPR();
-		
+		setRookieYear();
 	}
 	
 	public String getMostRecentEvent(int team) {
@@ -60,6 +59,33 @@ public class TBATeam {
 				e.printStackTrace();
 			}
 			if(date.after(event_date)) {
+				event_date = date;
+				index = i;
+			}
+		}
+		return events[index].getKey();
+	}
+	
+	public String getFirstEvent(int team) {
+		SEvent[] events = request.getTeamSEvents(team);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date event_date = new Date();
+		try {
+			event_date = sdf.parse("9999-12-31");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		int index =0;
+		for(int i=0; i < events.length; i++) {
+			Date date = new Date();
+			try {
+				date = sdf.parse(events[i].getStartDate());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(date.before(event_date)) {
 				event_date = date;
 				index = i;
 			}
@@ -110,6 +136,12 @@ public class TBATeam {
 		OPR = opr;
 	}
 	
+	public void setRookieYear() {
+		String event_key = getFirstEvent(team_number);
+		SEvent event = new TBA().getSEvent(event_key);
+		rookie_year = (int) event.getYear();
+	}
+	
 	public String getTeamKey() {
 		return team_key;
 	}
@@ -134,7 +166,7 @@ public class TBATeam {
 		return OPR;
 	}
 	
-	public int getYearsParticipated() {
-		return years_competed;
+	public int getRookieYear() {
+		return rookie_year;
 	}
 }
