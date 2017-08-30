@@ -7,7 +7,6 @@ import requests.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import localconstantstorage.ConnectionConstants;
 
 public class TBATeam {
