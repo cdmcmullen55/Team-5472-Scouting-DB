@@ -1,3 +1,4 @@
+package databaseTests;
 import java.sql.*;
 
 import localconstantstorage.ConnectionConstants;

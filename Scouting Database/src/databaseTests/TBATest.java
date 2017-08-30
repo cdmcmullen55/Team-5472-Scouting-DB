@@ -1,3 +1,4 @@
+package databaseTests;
 //import from the TBA-API-V3.jar 
 import localconstantstorage.ConnectionConstants;
 import main.*;

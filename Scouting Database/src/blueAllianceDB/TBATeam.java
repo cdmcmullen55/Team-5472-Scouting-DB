@@ -1,3 +1,4 @@
+package blueAllianceDB;
 import main.*;
 import models.simple.*;
 import models.other.matches.MatchAlliance;

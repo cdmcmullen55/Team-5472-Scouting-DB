@@ -1,5 +1,5 @@
+package databaseTests;
 import java.sql.*;
-
 import localconstantstorage.ConnectionConstants;
 public class SQLImportTest {
 	public static void main (String[] args) { 
