@@ -115,6 +115,9 @@ public class TBATeam {
 		int event_wins = 0;
 		int event_losses = 0;
 		int event_ties = 0;
+		if(matches.length==0) {
+			return;
+		}
 		for(SMatch match:matches) {
 			String alliance = getTeamAlliance(match, team_key);
 			if(alliance.equals(match.getWinningAlliance())) {
