@@ -54,7 +54,7 @@ public class TBATeam {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		// Declare default date object
 		Date event_date = new Date();
-		// Try-catch in case the paser hits an error
+		// Try-catch in case the parser hits an error
 		try {
 			// Set event_date to "zero"
 			event_date = sdf.parse("0000-01-01");
@@ -82,7 +82,7 @@ public class TBATeam {
 	
 	/* Returns event key for the first event participated in
 	(See getMostRecentEvent comments)*/
-	public String getFirstEvent(int team) {
+	private String getFirstEvent(int team) {
 		SEvent[] events = request.getTeamSEvents(team);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date event_date = new Date();
@@ -109,7 +109,7 @@ public class TBATeam {
 		return events[index].getKey();
 	}
 	
-	public void setWinLoss() {
+	private void setWinLoss() {
 		String event_key = getMostRecentEvent(team_number);
 		SMatch[] matches = request.getTeamEventSMatches(team_number, event_key);
 		int event_wins = 0;
@@ -130,7 +130,7 @@ public class TBATeam {
 		ties = event_ties;
 	}
 	
-	public String getTeamAlliance(SMatch match, String team_key) {
+	private String getTeamAlliance(SMatch match, String team_key) {
 		MatchAlliance blue = match.getBlue();
 		for(String team:blue.getTeamKeys()) {
 			if(team == team_key) {
@@ -140,7 +140,7 @@ public class TBATeam {
 		return "red";
 	}
 	
-	public void setOPR() {
+	private void setOPR() {
 		String event_key = getMostRecentEvent(team_number);
 		EventOPR[] oprs = new TBA().getOprs(event_key);
 		double opr = 0;
@@ -152,7 +152,7 @@ public class TBATeam {
 		OPR = opr;
 	}
 	
-	public void setRookieYear() {
+	private void setRookieYear() {
 		String event_key = getFirstEvent(team_number);
 		SEvent event = new TBA().getSEvent(event_key);
 		rookie_year = (int) event.getYear();
