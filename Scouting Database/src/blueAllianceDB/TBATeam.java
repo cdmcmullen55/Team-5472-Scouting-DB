@@ -165,6 +165,9 @@ public class TBATeam {
 		return team_key;
 	}
 	
+	public int getTeamNumber() {
+		return team_number;
+	}
 	public String getTeamName() {
 		return team_name;
 	}

@@ -1,7 +1,7 @@
 package blueAllianceDB;
 
 import java.sql.*;
-import localConstantStorage.ConnectionConstants;
+import localconstantstorage.ConnectionConstants;
 
 public class TBASingleImport {
 
@@ -28,13 +28,14 @@ public class TBASingleImport {
 		}
 	}
 	
-	public boolean insertTeam(){
+	private boolean insertTeam(){
 		try
 		{
 			Statement statement = conn.createStatement();
 			statement.execute("INSERT INTO Blue_Alliance_Data " + "VALUES (\'" + team.getTeamKey() + "\', \'" + 
-					  team.getTeamName() + "\', " + team.getTeamWins() + ", " + team.getTeamLosses() + ", " + 
-					  team.getTeamTies() + ", " + team.getOPR + ", " + team.getRookieYear() + ");");
+					  team.getTeamName() + "\', " + team.getTeamNumber() + ", " + team.getTeamWins() + ", " + 
+					  team.getTeamLosses() + ", " + team.getTeamTies() + ", " + team.getOPR() + ", " + 
+					  team.getRookieYear() + ");");
 			return true;
 		}
 		catch (Exception e)
