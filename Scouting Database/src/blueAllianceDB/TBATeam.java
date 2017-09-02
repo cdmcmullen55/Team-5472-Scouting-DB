@@ -120,11 +120,11 @@ public class TBATeam {
 		}
 		for(SMatch match:matches) {
 			String alliance = getTeamAlliance(match, team_key);
-			if(alliance.equals(match.getWinningAlliance())) {
-				event_wins++;
-			}
-			else if(match.getWinningAlliance().isEmpty()) {
+			if(match.getWinningAlliance().isEmpty()) {
 				event_ties++;
+			}
+			else if(alliance.equals(match.getWinningAlliance())) {
+				event_wins++;
 			}
 			else event_losses++;
 		}
@@ -136,7 +136,7 @@ public class TBATeam {
 	private String getTeamAlliance(SMatch match, String team_key) {
 		MatchAlliance blue = match.getBlue();
 		for(String team:blue.getTeamKeys()) {
-			if(team == team_key) {
+			if(team.equals(team_key)) {
 				return "blue";
 			}
 		}
