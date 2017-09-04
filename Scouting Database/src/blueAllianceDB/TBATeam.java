@@ -6,6 +6,7 @@ import models.other.events.EventOPR;
 import requests.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import localconstantstorage.ConnectionConstants;
 
@@ -38,6 +39,7 @@ public class TBATeam {
 		team_key = team.getKey();
 		// Retrieve team_name
 		team_name = team.getNickname();
+		scrubApostrophe();
 		// Retrieve win/loss record
 		setWinLoss();
 		// Retrieve OPR
@@ -47,36 +49,58 @@ public class TBATeam {
 	}
 	
 	// Returns event key for most recent event
+	
+	private void scrubApostrophe() {
+		int index = team_name.indexOf("\'");
+		while(index > 0) {
+			team_name = team_name.substring(0, index) + team_name.substring(index+1);
+			index = team_name.indexOf("\'", index);
+		}
+	}
+	
 	private String getMostRecentEvent(int team) {
+		Date now = new Date();
 		// Retrieve array of events team has participated in
-		SEvent[] events = request.getTeamSEvents(team);
+		SEvent[] events = request.getSEvents(team, Calendar.getInstance().get(Calendar.YEAR));
+		if(events.length < 2) {
+			events = request.getSEvents(team, Calendar.getInstance().get(Calendar.YEAR)-1);
+		}
+		if(events.length == 0)
+			return null;
 		// Set format for date parsing
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		// Declare default date object
-		Date event_date = new Date();
-		// Try-catch in case the parser hits an error
+		Date event_date = null;
 		try {
-			// Set event_date to "zero"
 			event_date = sdf.parse("0000-01-01");
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		int index =0;
-		// Loop parses the date for each event and compares to most recent date found
-		for(int i=0; i < events.length; i++) {
-			Date date = new Date();
-			try {
-				date = sdf.parse(events[i].getStartDate());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if(date.after(event_date)) {
-				event_date = date;
-				index = i;
-			}
+		int index = events.length-1;
+		// Loop parses the date for five most recent events and compares to most recent date found
+		for(int i=events.length-1; i>0; i--) {
+			if(request.getTeamEventSMatches(team_number, events[i].getKey()).length < 6 && i == index)
+				index--;
 		}
+		for(int i=events.length-1; i > 0; i--) {
+			if(events[i] != null && !events[i].getStartDate().equals(null)) {
+				Date date = new Date();
+				try {
+					date = sdf.parse(events[i].getStartDate());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					if(date.after(event_date) && date.before(now) &&
+							request.getTeamEventSMatches(team_number, events[i].getKey()).length > 10
+							&& !(events[index].getKey().equals("2017micmp")
+							|| events[index].getKey().equals("2017nhfoc"))) {
+						event_date = date;
+						index = i;
+					}
+				}
+			}
 		return events[index].getKey();
 	}
 	
@@ -87,34 +111,39 @@ public class TBATeam {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date event_date = new Date();
 		try {
-			event_date = sdf.parse("9999-12-31");
+			event_date = sdf.parse(events[0].getStartDate());
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		int index =0;
-		for(int i=0; i < events.length; i++) {
+		int index = 1;
+		for(int i=1; i < events.length; i++) {
 			Date date = new Date();
-			try {
-				date = sdf.parse(events[i].getStartDate());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if(date.before(event_date)) {
-				event_date = date;
-				index = i;
+			if(events[i].getStartDate() != null) {
+				try {
+					date = sdf.parse(events[i].getStartDate());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(date.before(event_date)) {
+					event_date = date;
+					index = i;
+				}
 			}
 		}
 		return events[index].getKey();
 	}
 	
 	private void setWinLoss() {
-		String event_key = getMostRecentEvent(team_number);
-		SMatch[] matches = request.getTeamEventSMatches(team_number, event_key);
 		int event_wins = 0;
 		int event_losses = 0;
 		int event_ties = 0;
+		if(getMostRecentEvent(team_number) == null) {
+			return;
+		}
+		String event_key = getMostRecentEvent(team_number);
+		SMatch[] matches = request.getTeamEventSMatches(team_number, event_key);
 		if(matches.length==0) {
 			return;
 		}
@@ -144,9 +173,11 @@ public class TBATeam {
 	}
 	
 	private void setOPR() {
+		double opr = 0;
+		if(getMostRecentEvent(team_number) == null)
+			return;
 		String event_key = getMostRecentEvent(team_number);
 		EventOPR[] oprs = new TBA().getOprs(event_key);
-		double opr = 0;
 		for(EventOPR result:oprs) {
 			if(team_key.equals(result.getTeamKey())) {
 				opr = result.getOpr();

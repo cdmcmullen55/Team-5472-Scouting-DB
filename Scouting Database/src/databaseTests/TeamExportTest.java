@@ -5,7 +5,7 @@ public class TeamExportTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		TBATeam team = new TBATeam(2383);
+		TBATeam team = new TBATeam(120);
 		System.out.println(team.getTeamKey());
 		System.out.println(team.getTeamName());
 		System.out.println("Wins: " + team.getTeamWins());
