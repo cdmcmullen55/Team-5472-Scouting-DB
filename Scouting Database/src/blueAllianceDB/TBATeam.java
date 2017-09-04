@@ -41,7 +41,6 @@ public class TBATeam {
 		if(fromDB)
 			setFromDB();
 		else {
-			new TBATeam(teamnumber);
 			// Set Authorization Key
 			TBA.setAuthToken(ConnectionConstants.AUTH_KEY);
 			// Create TBA object (from main.*)
@@ -81,6 +80,8 @@ public class TBATeam {
 		if(events.length < 2) {
 			events = request.getSEvents(team, Calendar.getInstance().get(Calendar.YEAR)-1);
 		}
+		if(team == 5058)
+			return "2017alhu";
 		if(events.length == 0)
 			return null;
 		// Set format for date parsing
