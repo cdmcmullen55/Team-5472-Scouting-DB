@@ -4,6 +4,12 @@ import models.simple.*;
 import models.other.matches.MatchAlliance;
 import models.other.events.EventOPR;
 import requests.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,36 +29,46 @@ public class TBATeam {
 	private int ties;
 	private double OPR;
 	private int rookie_year;
+	private PreparedStatement statement;
 
 	public TBATeam(int teamnumber) {
 		// TODO Auto-generated constructor stub
+		this(teamnumber, false);
+	}
+	
+	public TBATeam(int teamnumber, boolean fromDB) {
 		team_number = teamnumber;
-		// Set Authorization Key
-		TBA.setAuthToken(ConnectionConstants.AUTH_KEY);
-		// Create TBA object (from main.*)
-		TBA tba = new TBA();
-		// Retrieve Team object from Blue Alliance
-		team = tba.getSTeam(team_number);
-		// Create TeamRequest object
-		request = new TeamRequest();
-		// Retrieve team_key (primary key in DB)
-		team_key = team.getKey();
-		// Retrieve team_name
-		team_name = team.getNickname();
-		scrubApostrophe();
-		// Retrieve win/loss record
-		setWinLoss();
-		// Retrieve OPR
-		setOPR();
-		// Retrieve rookie year
-		setRookieYear();
+		if(fromDB)
+			setFromDB();
+		else {
+			new TBATeam(teamnumber);
+			// Set Authorization Key
+			TBA.setAuthToken(ConnectionConstants.AUTH_KEY);
+			// Create TBA object (from main.*)
+			TBA tba = new TBA();
+			// Retrieve Team object from Blue Alliance
+			team = tba.getSTeam(team_number);
+			// Create TeamRequest object
+			request = new TeamRequest();
+			// Retrieve team_key (primary key in DB)
+			team_key = team.getKey();
+			// Retrieve team_name
+			team_name = team.getNickname();
+			scrubApostrophe();
+			// Retrieve win/loss record
+			setWinLoss();
+			// Retrieve OPR
+			setOPR();
+			// Retrieve rookie year
+			setRookieYear();
+		}
 	}
 	
 	// Returns event key for most recent event
 	
 	private void scrubApostrophe() {
 		int index = team_name.indexOf("\'");
-		while(index > 0) {
+		while(index >= 0) {
 			team_name = team_name.substring(0, index) + team_name.substring(index+1);
 			index = team_name.indexOf("\'", index);
 		}
@@ -190,6 +206,41 @@ public class TBATeam {
 		String event_key = getFirstEvent(team_number);
 		SEvent event = new TBA().getSEvent(event_key);
 		rookie_year = (int) event.getYear();
+	}
+	
+	private boolean openConnection(){
+		try {
+			Class.forName("net.sourceforge.jtds.jdbc.Driver");
+		    String url = ConnectionConstants.TBA_DB_CONNECTION_STRING; 
+		    Connection conn = DriverManager.getConnection(url, ConnectionConstants.USER_ID, ConnectionConstants.PASS);
+		    statement = conn.prepareStatement("SELECT * " + "FROM Blue_Alliance_Data " + "WHERE team_number = " + team_number, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	private void setFromDB() {
+		openConnection();
+		try {
+			ResultSet rs = statement.executeQuery();
+			if(rs.next());{
+				team_key = rs.getString("team_key");
+				team_name = rs.getString("team_name");
+				wins = rs.getInt("team_wins");
+				losses = rs.getInt("team_losses");
+				ties = rs.getInt("team_ties");
+				OPR = rs.getFloat("team_OPR");
+				rookie_year = rs.getInt("rookie_year");
+			}
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("There was a SQL exception:");
+			e.printStackTrace();
+		}
 	}
 	
 	public String getTeamKey() {
