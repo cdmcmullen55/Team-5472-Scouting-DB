@@ -82,7 +82,7 @@ public class TBATeam {
 		}
 		if(team == 5058)
 			return "2017alhu";
-		if(events.length == 0)
+		if(events.length == 0 || team == 5573)
 			return null;
 		// Set format for date parsing
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -133,8 +133,8 @@ public class TBATeam {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		int index = 1;
-		for(int i=1; i < events.length; i++) {
+		int index = 0;
+		for(int i=0; i < events.length; i++) {
 			Date date = new Date();
 			if(events[i].getStartDate() != null) {
 				try {
