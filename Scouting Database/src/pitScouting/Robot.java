@@ -125,6 +125,11 @@ public class Robot {
 		start_pos = scanner.nextLine();
 	}
 	
+	public void setBaseline() {
+		System.out.println("Enter \"true\" for baseline cross, \"false\" for none: ");
+		baseline = Boolean.parseBoolean(scanner.nextLine());
+	}
+	
 	public String getRobotKey(){
 	
 		return robot_key;
