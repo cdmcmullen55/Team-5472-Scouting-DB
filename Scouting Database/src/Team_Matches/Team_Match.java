@@ -45,4 +45,131 @@ public class Team_Matches{
   private boolean pascals;
   private String comments;
   
+  public String getTMKey(){
+  
+  return t_m_key;
+  
+  }
+  
+  public String getCompKey(){
+  
+  return comp_key;
+  
+  }
+  
+  public String getTeamKey(){
+  
+  return team_key;
+  
+  }
+  
+  public int getMatchNum(){
+  
+  
+  return match_num;
+  
+  }
+  
+  public boolean getBaseline(){
+  
+  return baseline;
+  
+  }
+  
+  public boolean getAutoNone(){
+  
+  return auto_none;
+  
+  }
+  
+  public boolean getAutoBreak(){
+  
+  return auto_break;
+  
+  }
+  
+  public int getAutoGearCent(){
+  
+  return auto_gear_cent;
+  
+  }
+  
+  public int getAutoGearBoil(){
+  
+  return auto_gear_boil;
+  
+  }
+  
+  public int getAutoGearLoad(){
+  
+  return auto_gear_load;
+  
+  }
+  
+  public int getAutoGrndGear(){
+  
+  return auto_grnd_gear;
+  
+  }
+  
+  public int getAutoLoadGear(){
+  
+  return auto_load_gear;
+  
+  }
+  
+  public int getAutoGCAtt(){
+  
+  return auto_g_c_att;
+  
+  }
+  
+  public int getAutoGBAtt(){
+  
+  return auto_g_b_att;
+  
+  }
+  
+  public int getAutoGLAtt(){
+  
+  return auto_g_l_att;
+  
+  }
+  
+  public int getAutoGearDrop(){
+  
+  return auto_gear_drop;
+  
+  }
+  
+  public boolean getAutoFuelHopp(){
+  
+  return auto_fuel_hopp;
+  
+  }
+  
+  public boolean getAutoFuelLoad(){
+  
+  return auto_fuel_load;
+  
+  }
+  
+  public boolean getAutoFuelGrnd(){
+  
+  return auto_fuel_grnd;
+  
+  }
+  
+  public boolean getAutoBoilHigh(){
+  
+  return auto_boil_high;
+  
+  }
+  
+  public boolean getAutoBoilKey(){
+  
+  return auto_boi_key;
+  
+  }
+  
 }
