@@ -25,8 +25,7 @@ CREATE TABLE Pit_Scouting_2017
 	tele_balls	INTEGER		,
 	tele_low	BIT			,
 	acc_scale	INTEGER		,
-	climb_strt	BIT			,
-	climb_comp	BIT			,
+	climb		BIT			,
 	climb_time	INTEGER		,
 	comments	CHAR(1000)
 )
