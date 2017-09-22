@@ -59,4 +59,172 @@ public class Robot {
 		System.out.println("Enter  :");
 		cims_used = Integer.parseInt(scanner.nextLine());
 	}
+	
+	public String getRobotKey(){
+	
+		return robot_key;
+		
+	}
+	
+	public String getTeamKey(){
+	
+	return team_key;
+	
+	}
+	
+	public String getDriveTrain(){
+	
+	return drive_train;
+	
+	}
+	
+	public int getCimsUsed{
+	
+	return cims_used;
+	
+	}
+	
+	public int getSpeedFps(){
+	
+	return speed_fps;
+	
+	}
+	
+	public int getSpeedScaled(){
+	
+	return speed_scaled;
+	
+	}
+	
+	public boolean getShiftGears(){
+	
+	return shift_gears;
+	
+	}
+	
+	public int getRobotWt(){
+	
+	return robot_wt;
+	
+	}
+	
+	public int getBallCap(){
+	
+	return ball_cap;
+	
+	}
+	
+	public boolean getVision(){
+	
+	return vision;
+	
+	}
+	
+	public boolean getActiveGear(){
+	
+	return active_gear;
+	
+	}
+	
+	public booolean getGroundGear(){
+	
+	return ground_gear;
+	
+	}
+	
+	public int getRunSec(){
+	
+	return run_sec;
+	
+	}
+	
+	public int getRunScale(){
+	
+	return run_scale;
+	
+	}
+	
+	public boolean getGroundBall(){
+	
+	return ground_ball;
+		
+	}
+	
+	public int getStrategy(){
+	
+	return strategy;
+	
+	}
+	
+	public String getStartPos(){
+	
+	return start_pos;
+	
+	}
+	
+	public boolean getBaseline(){
+	
+	return baseline;
+	
+	}
+	
+	public boolean getAutoGear(){
+	
+	return auto_gear;
+	
+	}
+	
+	public int getAutoBall(){
+	
+	return auto_ball;
+	
+	}
+	
+	public boolean getAutoLow(){
+	
+	return auto_low;
+	
+	}
+	
+	public int getTeleGears(){
+	
+	return tele_gears;
+	
+	}
+	
+	public int getTeleBals(){
+	
+	return tele_bals;
+	
+	}
+	
+	public boolean getTeleLow(){
+	
+	return tele_low;
+	
+	}
+	
+	public int getAccScale(){
+	
+	return acc_scale;
+	
+	}
+	
+	public boolean getClimb(){
+	
+	return climb;
+	
+	}
+	
+	public int getClimbTime(){
+	
+	return climb_time;
+	
+	}
+	
+	public String comments(){
+	
+	return comments;
+	
+	}
 }
