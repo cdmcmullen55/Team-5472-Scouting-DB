@@ -84,6 +84,47 @@ public class Robot {
 		ball_cap = Integer.parseInt(scanner.nextLine());
 	}
 	
+	public void setVision() {
+		System.out.println("Enter \"true\" for vision system, \"false\" for none: ");
+		vision = Boolean.parseBoolean(scanner.nextLine());
+		System.out.println("Include details in your comments.");
+	}
+	
+	public void setActiveGear() {
+		System.out.println("Enter \"true\" for active pickup, \"false\" for passive: ");
+		active_gear = Boolean.parseBoolean(scanner.nextLine());
+	}
+	
+	public void setGroundGear() {
+		System.out.println("Enter \"true\" for ground pickup, \"false\" for none: ");
+		ground_gear = Boolean.parseBoolean(scanner.nextLine());
+	}
+	
+	public void setRunSec() {
+		System.out.println("Enter gear run time in sec (0 if unknown): ");
+		run_sec = Integer.parseInt(scanner.nextLine());
+	}
+	
+	public void setRunScale() {
+		System.out.println("Enter gear run speed on a scale of 1 to 5: ");
+		run_scale = Integer.parseInt(scanner.nextLine());
+	}
+	
+	public void setGroundBall() {
+		System.out.println("Enter 1 for ground ball pickup, 0 for hopper only: ");
+		ground_ball = Boolean.parseBoolean(scanner.nextLine());
+	}
+	
+	public void setStrategy() {
+		System.out.println("Enter 0 for offense, 1 for defense, 2 for both: ");
+		strategy = Integer.parseInt(scanner.nextLine());
+	}
+	
+	public void setStartPosition() {
+		System.out.println("Enter preferred start position (10 characters or less)");
+		start_pos = scanner.nextLine();
+	}
+	
 	public String getRobotKey(){
 	
 		return robot_key;
