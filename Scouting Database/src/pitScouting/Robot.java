@@ -60,6 +60,30 @@ public class Robot {
 		cims_used = Integer.parseInt(scanner.nextLine());
 	}
 	
+	public void setSpeedScaled() {
+		System.out.println("Enter speed on a scale of 1 to 5: ");
+		speed_scaled = Integer.parseInt(scanner.nextLine());
+	}
+	
+	public void setGearShift() {
+		System.out.println("Enter \"true\" for shifting gearbox, \"false\" for static: ");
+		shift_gears = Boolean.parseBoolean(scanner.nextLine());
+	}
+	
+	public void setRobotWeight() {
+		System.out.println("Enter robot weight in lbs (\"null\" if unknown): ");
+		String input = scanner.nextLine();
+		if(!input.equals("null"))
+			robot_wt = Integer.parseInt(input);
+		else
+			return;
+	}
+	
+	public void setBallCapacity() {
+		System.out.println("Enter robot ball capacity (0 if none): ");
+		ball_cap = Integer.parseInt(scanner.nextLine());
+	}
+	
 	public String getRobotKey(){
 	
 		return robot_key;
