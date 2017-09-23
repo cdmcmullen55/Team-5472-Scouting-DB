@@ -1,6 +1,6 @@
 package teamMatches;
 
-public class Team_Matches{
+public class Team_Match{
 
   private String t_m_key;
   private String comp_key;

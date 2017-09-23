@@ -148,7 +148,7 @@ public class Robot {
 	
 	}
 	
-	public int getCimsUsed{
+	public int getCimsUsed(){
 	
 	return cims_used;
 	
@@ -196,7 +196,7 @@ public class Robot {
 	
 	}
 	
-	public booolean getGroundGear(){
+	public boolean getGroundGear(){
 	
 	return ground_gear;
 	
