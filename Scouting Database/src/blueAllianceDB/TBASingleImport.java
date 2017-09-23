@@ -12,7 +12,7 @@ public class TBASingleImport {
 		team = new TBATeam(number);
 	}
 	
-	public boolean openConnection(){
+	private boolean openConnection(){
 		try
 		{
 			Class.forName("net.sourceforge.jtds.jdbc.Driver");
@@ -32,7 +32,7 @@ public class TBASingleImport {
 		try
 		{
 			Statement statement = conn.createStatement();
-			statement.execute("INSERT INTO Blue_Alliance_Data " + "VALUES (\'" + team.getTeamKey() + "\', \'" + 
+			statement.execute("INSERT INTO Teams " + "VALUES (\'" + team.getTeamKey() + "\', \'" + 
 					  team.getTeamName() + "\', " + team.getTeamNumber() + ", " + team.getTeamWins() + ", " + 
 					  team.getTeamLosses() + ", " + team.getTeamTies() + ", " + team.getOPR() + ", " + 
 					  team.getRookieYear() + ");");

@@ -1,7 +1,12 @@
 package pitScouting;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 //import java.io.*;
 import java.util.Scanner;
+
+import localconstantstorage.ConnectionConstants;
 
 public class Robot {
 
@@ -36,6 +41,7 @@ public class Robot {
 	private int climb_time;
 	private String comments;
 	private Scanner scanner = new Scanner(System.in);
+	private Connection conn;
 	
 	public Robot(int team_num, boolean fuel, boolean gears) {
 		// TODO Auto-generated constructor stub
@@ -46,6 +52,7 @@ public class Robot {
 	}
 	
 	public void setAll() {
+		System.out.println("General Information:");
 		setDriveTrain();
 		setCimsUsed();
 		setSpeedFPS();
@@ -60,11 +67,13 @@ public class Robot {
 		setRunScale();
 		setGroundBall();
 		setStrategy();
+		System.out.println("Auto Round:");
 		setStartPosition();
 		setBaseline();
 		setAutoGear();
 		setAutoBall();
 		setAutoLow();
+		System.out.println("Tele Round:");
 		setTeleGears();
 		setTeleBalls();
 		setTeleLow();
@@ -73,12 +82,40 @@ public class Robot {
 		setClimbTime();
 		setComments();
 	}
+	
+	private boolean openConnection(){
+		try
+		{
+			Class.forName("net.sourceforge.jtds.jdbc.Driver");
+			String url = ConnectionConstants.TBA_DB_CONNECTION_STRING;
+			conn = DriverManager.getConnection(url, ConnectionConstants.USER_ID, ConnectionConstants.PASS);
+			return true;
+		}
+		catch (Exception e)
+		{
+			System.err.println("Exception thrown:"); 
+      			System.err.println(e.getMessage());
+			return false;
+		}
+	}
+	
+	private boolean importRobot() {
+		String query = "";
+		try {
+			Statement statement = conn.createStatement();
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
 	//General Information
 	public void setDriveTrain() {
 		System.out.println("Enter drive train type (type \"null\" if unknown): ");
 		String input = scanner.nextLine();
 		if(!input.equals("null"))
-			drive_train = scanner.nextLine();
+			drive_train = input;
 		else
 			drive_train = null;
 	}
@@ -197,7 +234,7 @@ public class Robot {
 	}
 	
 	public void setAutoLow() {
-		if(fuel) {
+		if(fuel&&auto_ball!=0) {
 			System.out.println("Enter \"true\" for low goal, \"false\" for high: ");
 			auto_low = Boolean.parseBoolean(scanner.nextLine());
 		}
@@ -220,14 +257,14 @@ public class Robot {
 	}
 	
 	public void setTeleLow() {
-		if(fuel) {
+		if(fuel&&tele_balls!=0) {
 			System.out.println("Enter \"true\" for low goal, \"false\" for high: ");
 			tele_low = Boolean.parseBoolean(scanner.nextLine());
 		}
 	}
 	
 	public void setAccScale() {
-		if(fuel) {
+		if(fuel&&tele_balls!=0) {
 			System.out.println("Enter fuel accuracy on a scale of 1 to 5: ");
 			acc_scale = Integer.parseInt(scanner.nextLine());
 		}
