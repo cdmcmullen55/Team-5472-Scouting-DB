@@ -22,8 +22,8 @@ public class Team_Match{
   private boolean auto_fuel_load;
   private boolean auto_fuel_grnd;
   private boolean auto_boil_high;
-  private boolean auto_boi_key;
-  private boolean auto_boi_cyc;
+  private boolean auto_boil_key;
+  private boolean auto_boil_cyc;
   private boolean tele_none;
   private boolean tele_break;
   private int tele_gear_drop;
@@ -40,7 +40,7 @@ public class Team_Match{
   private boolean tkoff_succ;
   private int tkoff_speed;
   private int dfnse_rate;
-  rivate boolean win;
+  private boolean win;
   private boolean rotors;
   private boolean pascals;
   private String comments;
@@ -168,7 +168,7 @@ public class Team_Match{
   
   public boolean getAutoBoilKey(){
   
-  return auto_boi_key;
+  return auto_boil_key;
   
   }
   

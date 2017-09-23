@@ -1,12 +1,14 @@
 package pitScouting;
 
-import java.io.*;
+//import java.io.*;
 import java.util.Scanner;
 
 public class Robot {
 
 	private String robot_key;
 	private String team_key;
+	private boolean fuel;
+	private boolean gears;
 	private String drive_train;
 	private int cims_used;
 	private int speed_fps;
@@ -27,7 +29,7 @@ public class Robot {
 	private int auto_ball;
 	private boolean auto_low;
 	private int tele_gears;
-	private int tele_bals;
+	private int tele_balls;
 	private boolean tele_low;
 	private int acc_scale;
 	private boolean climb;
@@ -35,12 +37,43 @@ public class Robot {
 	private String comments;
 	private Scanner scanner = new Scanner(System.in);
 	
-	public Robot(int team_num) {
+	public Robot(int team_num, boolean fuel, boolean gears) {
 		// TODO Auto-generated constructor stub
 		team_key = "frc" + team_num;
 		robot_key = team_key + "_2017";
+		this.fuel = fuel;
+		this.gears = gears;
 	}
 	
+	public void setAll() {
+		setDriveTrain();
+		setCimsUsed();
+		setSpeedFPS();
+		setSpeedScaled();
+		setGearShift();
+		setRobotWeight();
+		setBallCapacity();
+		setVision();
+		setActiveGear();
+		setGroundGear();
+		setRunSec();
+		setRunScale();
+		setGroundBall();
+		setStrategy();
+		setStartPosition();
+		setBaseline();
+		setAutoGear();
+		setAutoBall();
+		setAutoLow();
+		setTeleGears();
+		setTeleBalls();
+		setTeleLow();
+		setAccScale();
+		setClimb();
+		setClimbTime();
+		setComments();
+	}
+	//General Information
 	public void setDriveTrain() {
 		System.out.println("Enter drive train type (type \"null\" if unknown): ");
 		String input = scanner.nextLine();
@@ -51,18 +84,20 @@ public class Robot {
 	}
 
 	public void setCimsUsed() {
-		System.out.println("Enter number of CIM motors used :");
+		System.out.println("Enter number of CIM motors used : ");
 		cims_used = Integer.parseInt(scanner.nextLine());
 	}
 	
 	public void setSpeedFPS() {
-		System.out.println("Enter  :");
-		cims_used = Integer.parseInt(scanner.nextLine());
+		System.out.println("Enter speed in feet per second (enter 0 if unknown): ");
+		speed_fps = Integer.parseInt(scanner.nextLine());
 	}
 	
 	public void setSpeedScaled() {
-		System.out.println("Enter speed on a scale of 1 to 5: ");
-		speed_scaled = Integer.parseInt(scanner.nextLine());
+		if(speed_fps==0) {
+			System.out.println("Enter speed on a scale of 1 to 5: ");
+			speed_scaled = Integer.parseInt(scanner.nextLine());
+		}
 	}
 	
 	public void setGearShift() {
@@ -80,39 +115,54 @@ public class Robot {
 	}
 	
 	public void setBallCapacity() {
-		System.out.println("Enter robot ball capacity (0 if none): ");
-		ball_cap = Integer.parseInt(scanner.nextLine());
+		if(fuel) {
+			System.out.println("Enter robot ball capacity: ");
+			ball_cap = Integer.parseInt(scanner.nextLine());
+		}
+		else
+			ball_cap = 0;
 	}
 	
 	public void setVision() {
 		System.out.println("Enter \"true\" for vision system, \"false\" for none: ");
 		vision = Boolean.parseBoolean(scanner.nextLine());
-		System.out.println("Include details in your comments.");
+		if(vision)
+			System.out.println("Include details in your comments.");
 	}
 	
 	public void setActiveGear() {
-		System.out.println("Enter \"true\" for active pickup, \"false\" for passive: ");
-		active_gear = Boolean.parseBoolean(scanner.nextLine());
+		if(gears) {
+			System.out.println("Enter \"true\" for active dropoff, \"false\" for passive: ");
+			active_gear = Boolean.parseBoolean(scanner.nextLine());
+		}
 	}
 	
 	public void setGroundGear() {
-		System.out.println("Enter \"true\" for ground pickup, \"false\" for none: ");
-		ground_gear = Boolean.parseBoolean(scanner.nextLine());
+		if(gears) {
+			System.out.println("Enter \"true\" for ground pickup, \"false\" for none: ");
+			ground_gear = Boolean.parseBoolean(scanner.nextLine());
+		}
 	}
 	
 	public void setRunSec() {
-		System.out.println("Enter gear run time in sec (0 if unknown): ");
-		run_sec = Integer.parseInt(scanner.nextLine());
+		if(gears) {
+			System.out.println("Enter gear run time in sec (0 if unknown): ");
+			run_sec = Integer.parseInt(scanner.nextLine());
+		}
 	}
 	
 	public void setRunScale() {
-		System.out.println("Enter gear run speed on a scale of 1 to 5: ");
-		run_scale = Integer.parseInt(scanner.nextLine());
+		if(gears&&run_sec==0) {
+			System.out.println("Enter gear run speed on a scale of 1 to 5: ");
+			run_scale = Integer.parseInt(scanner.nextLine());
+		}
 	}
 	
 	public void setGroundBall() {
-		System.out.println("Enter 1 for ground ball pickup, 0 for hopper only: ");
-		ground_ball = Boolean.parseBoolean(scanner.nextLine());
+		if(fuel) {
+			System.out.println("Enter 1 for ground ball pickup, 0 for hopper only: ");
+			ground_ball = Boolean.parseBoolean(scanner.nextLine());
+		}
 	}
 	
 	public void setStrategy() {
@@ -120,6 +170,8 @@ public class Robot {
 		strategy = Integer.parseInt(scanner.nextLine());
 	}
 	
+	
+	//Auto round
 	public void setStartPosition() {
 		System.out.println("Enter preferred start position (10 characters or less)");
 		start_pos = scanner.nextLine();
@@ -130,34 +182,129 @@ public class Robot {
 		baseline = Boolean.parseBoolean(scanner.nextLine());
 	}
 	
-	public String getRobotKey(){
+	public void setAutoGear() {
+		if(gears) {
+			System.out.println("Enter \"true\" for gear placed in auto, \"false\" for none: ");
+			auto_gear = Boolean.parseBoolean(scanner.nextLine());
+		}
+	}
 	
+	public void setAutoBall() {
+		if(fuel) {
+			System.out.println("Enter number of balls scored in auto: ");
+			auto_ball = Integer.parseInt(scanner.nextLine());
+		}
+	}
+	
+	public void setAutoLow() {
+		if(fuel) {
+			System.out.println("Enter \"true\" for low goal, \"false\" for high: ");
+			auto_low = Boolean.parseBoolean(scanner.nextLine());
+		}
+	}
+	
+	
+	//Tele round
+	public void setTeleGears() {
+		if(gears) {
+			System.out.println("Enter projected number of gears scored in match: ");
+			tele_gears = Integer.parseInt(scanner.nextLine());
+		}
+	}
+	
+	public void setTeleBalls() {
+		if(fuel) {
+			System.out.println("Enter projected number of balls scored in match: ");
+			tele_balls = Integer.parseInt(scanner.nextLine());
+		}
+	}
+	
+	public void setTeleLow() {
+		if(fuel) {
+			System.out.println("Enter \"true\" for low goal, \"false\" for high: ");
+			tele_low = Boolean.parseBoolean(scanner.nextLine());
+		}
+	}
+	
+	public void setAccScale() {
+		if(fuel) {
+			System.out.println("Enter fuel accuracy on a scale of 1 to 5: ");
+			acc_scale = Integer.parseInt(scanner.nextLine());
+		}
+	}
+	
+	public void setClimb() {
+		System.out.println("Enter \"true\" for climb, \"false\" for none: ");
+		climb = Boolean.parseBoolean(scanner.nextLine());
+	}
+	
+	public void setClimbTime() {
+		if(climb) {
+			System.out.println("Enter climb time in seconds: ");
+			climb_time = Integer.parseInt(scanner.nextLine());
+		}
+	}
+	
+	public void setComments() {
+		System.out.println("Enter additional comments: ");
+		comments = scanner.nextLine();
+	}
+	
+	public String toString() {
+		String general = "Robot key: "+robot_key+"\r\nTeam key: "+team_key+"\r\nDrive train: "+
+				drive_train+"\r\nCIM motors: "+cims_used;
+		if(speed_fps!=0)
+			general = general+"\r\nSpeed(fps): "+speed_fps;
+		else
+			general = general+"\r\nSpeed(1-5): "+speed_scaled;
+		general = general+"\r\nShifting gearbox? "+shift_gears+"\r\nWeight: "+robot_wt+" lbs";
+		if(fuel)
+			general = general+"\r\nFuel capacity: "+ball_cap;
+		general = general+"\r\nVision? "+vision;
+		if(gears)
+			general = general+"\r\nActive gear pickup? "+active_gear+"\r\nGround gear pickup? "
+				+ground_gear;
+		if(strategy==0)
+			general = general+"\r\nOffensive";
+		else if(strategy==1)
+			general = general+"\r\nDefensive";
+		else
+			general = general+"\r\nBoth";
+		String auto = "\r\nStarting position:"+start_pos+"\r\nBaseline? "+baseline;
+		if(gears)
+			auto = auto+"\r\nAuto Gear? "+auto_gear;
+		if(fuel)
+			auto = auto+"\r\nAuto Fuel? "+auto_ball+"\r\nLow goal? "+auto_low;
+		String tele = "";
+		if(gears)
+			tele = tele+"\r\nTele Gears: "+tele_gears;
+		if(fuel)
+			tele = tele+"\r\nTele Fuel: "+tele_balls+"\r\nLow goal? "+tele_low+"\r\nAccuracy(1-5): "
+			+acc_scale;
+		tele = tele+"\r\nClimb? "+climb;
+		if(climb)
+			tele = tele+"\r\nClimb time: "+climb_time;
+		return general+auto+tele+"\r\n"+comments;
+	}
+	
+	public String getRobotKey(){
 		return robot_key;
-		
 	}
 	
 	public String getTeamKey(){
-	
-	return team_key;
-	
+		return team_key;
 	}
 	
 	public String getDriveTrain(){
-	
-	return drive_train;
-	
+		return drive_train;
 	}
 	
 	public int getCimsUsed(){
-	
-	return cims_used;
-	
+		return cims_used;
 	}
 	
 	public int getSpeedFps(){
-	
-	return speed_fps;
-	
+		return speed_fps;
 	}
 	
 	public int getSpeedScaled(){
@@ -262,9 +409,9 @@ public class Robot {
 	
 	}
 	
-	public int getTeleBals(){
+	public int getTeleBalls(){
 	
-	return tele_bals;
+	return tele_balls;
 	
 	}
 	
