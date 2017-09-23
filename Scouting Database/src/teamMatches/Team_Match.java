@@ -172,4 +172,130 @@ public class Team_Match{
   
   }
   
+  public boolean getAutoBoilCyc(){
+  
+  return auto_boil_cyc;
+  
+  }
+  
+  public boolean getTeleNone(){
+  
+  return tele_none;
+  
+  }
+  
+  public boolean getTeleBreak(){
+  
+  return tele_break;
+  
+  }
+  
+  public int getTeleGearDrop(){
+  
+  return tele_gear_drop;
+  
+  }
+  
+  public int getTeleGearCent(){
+  
+  return tele_gear_cent;
+  
+  }
+  
+  public int getTeleGearBoil(){
+  
+  return tele_gear_boil;
+  
+  }
+  
+  public int getTeleGearLoad(){
+  
+  return tele_gear_load;
+  
+  }
+  
+  public int getTeleGrndPckp(){
+  
+  return tele_grnd_pckp;
+  
+  }
+  
+  public int getTeleLoadPckp(){
+  
+  return tele_load_pckp;
+  
+  }
+  
+  public int getTeleFullHigh(){
+  
+  return tele_full_high;
+  
+  }
+  
+  public int getTeleFullLow(){
+  
+  return tele_full_low;
+  
+  }
+  
+  public int getTeleHalfHigh(){
+  
+  return tele_half_high;
+  
+  }
+  
+  public int getTeleHalfLow(){
+  
+  return tele_half_low;
+  
+  }
+  
+  public boolean getTakeoffAtt(){
+  
+  return takeoff_att;
+  
+  }
+  
+  public boolean getTkoffSucc(){
+  
+  return tkoff_succ;
+  
+  }
+  
+  public int getTkoffSpeed(){
+  
+  return tkoff_speed;
+  
+  }
+  
+  public int getDfnseRate(){
+  
+  return dfnse_rate;
+  
+  }
+  
+  public boolean getWin(){
+  
+  return win;
+  
+  }
+  
+  public boolean getRotors(){
+  
+  return rotors;
+  
+  }
+  
+  public boolean pascals(){
+  
+  return pascals;
+  
+  }
+  
+  public String getComments(){
+  
+  return comments;
+  
+  }
+  
 }
