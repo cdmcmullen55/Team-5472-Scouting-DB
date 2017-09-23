@@ -22,8 +22,8 @@ public class Team_Match{
   private boolean auto_fuel_load;
   private boolean auto_fuel_grnd;
   private boolean auto_boil_high;
-  private boolean auto_boi_key;
-  private boolean auto_boi_cyc;
+  private boolean auto_boil_key;
+  private boolean auto_boil_cyc;
   private boolean tele_none;
   private boolean tele_break;
   private int tele_gear_drop;
@@ -40,7 +40,7 @@ public class Team_Match{
   private boolean tkoff_succ;
   private int tkoff_speed;
   private int dfnse_rate;
-  rivate boolean win;
+  private boolean win;
   private boolean rotors;
   private boolean pascals;
   private String comments;
@@ -168,7 +168,133 @@ public class Team_Match{
   
   public boolean getAutoBoilKey(){
   
-  return auto_boi_key;
+  return auto_boil_key;
+  
+  }
+  
+  public boolean getAutoBoilCyc(){
+  
+  return auto_boil_cyc;
+  
+  }
+  
+  public boolean getTeleNone(){
+  
+  return tele_none;
+  
+  }
+  
+  public boolean getTeleBreak(){
+  
+  return tele_break;
+  
+  }
+  
+  public int getTeleGearDrop(){
+  
+  return tele_gear_drop;
+  
+  }
+  
+  public int getTeleGearCent(){
+  
+  return tele_gear_cent;
+  
+  }
+  
+  public int getTeleGearBoil(){
+  
+  return tele_gear_boil;
+  
+  }
+  
+  public int getTeleGearLoad(){
+  
+  return tele_gear_load;
+  
+  }
+  
+  public int getTeleGrndPckp(){
+  
+  return tele_grnd_pckp;
+  
+  }
+  
+  public int getTeleLoadPckp(){
+  
+  return tele_load_pckp;
+  
+  }
+  
+  public int getTeleFullHigh(){
+  
+  return tele_full_high;
+  
+  }
+  
+  public int getTeleFullLow(){
+  
+  return tele_full_low;
+  
+  }
+  
+  public int getTeleHalfHigh(){
+  
+  return tele_half_high;
+  
+  }
+  
+  public int getTeleHalfLow(){
+  
+  return tele_half_low;
+  
+  }
+  
+  public boolean getTakeoffAtt(){
+  
+  return takeoff_att;
+  
+  }
+  
+  public boolean getTkoffSucc(){
+  
+  return tkoff_succ;
+  
+  }
+  
+  public int getTkoffSpeed(){
+  
+  return tkoff_speed
+  
+  }
+  
+  public int getDfnseRate(){
+  
+  return dfnse_rate;
+  
+  }
+  
+  public boolean getWin(){
+  
+  return win;
+  
+  }
+  
+  public boolean getRotors(){
+  
+  return rotors;
+  
+  }
+  
+  public boolean pascals(){
+  
+  return pascals;
+  
+  }
+  
+  public String getComments(){
+  
+  return comments;
   
   }
   
