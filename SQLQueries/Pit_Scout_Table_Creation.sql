@@ -1,6 +1,6 @@
 CREATE TABLE Pit_Scouting_2017
 (
-	robot_key	CHAR(10)	NOT NULL PRIMARY KEY,
+	robot_key	CHAR(20)	NOT NULL PRIMARY KEY,
 	team_key	CHAR(10)	REFERENCES Teams(team_key),
 	drive_train	CHAR(100)	,
 	cims_used	INTEGER		,
