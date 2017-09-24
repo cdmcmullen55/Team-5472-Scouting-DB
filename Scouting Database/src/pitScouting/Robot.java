@@ -19,25 +19,35 @@ public class Robot {
 	private int speed_fps;
 	private int speed_scaled;
 	private boolean shift_gears;
+	private int shift_gears_int;
 	private int robot_wt;
 	private int ball_cap;
 	private boolean vision;
+	private int vision_int;
 	private boolean active_gear;
+	private int active_gear_int;
 	private boolean ground_gear;
+	private int ground_gear_int;
 	private int run_sec;
 	private int run_scale;
 	private boolean ground_ball;
+	private int ground_ball_int;
 	private int strategy;
 	private String start_pos;
 	private boolean baseline;
+	private int baseline_int;
 	private boolean auto_gear;
+	private int auto_gear_int;
 	private int auto_ball;
 	private boolean auto_low;
+	private int auto_low_int;
 	private int tele_gears;
 	private int tele_balls;
 	private boolean tele_low;
+	private int tele_low_int;
 	private int acc_scale;
 	private boolean climb;
+	private int climb_int;
 	private int climb_time;
 	private String comments;
 	private Scanner scanner = new Scanner(System.in);
@@ -83,6 +93,46 @@ public class Robot {
 		setComments();
 	}
 	
+	private String writeQuery() {
+		String query = "INSERT INTO Pit_Scouting_2017 (robot_key, team_key, drive_train, cims_used, ";
+		if(speed_fps==0)
+			query = query+"speed_scaled, ";
+		else
+			query = query+"speed_fps, ";
+		query = query+"shift_gears, robot_wt, ball_cap, vision, ";
+		if(gears&&run_sec==0)
+			query = query+"active_gear, ground_gear, run_scale, auto_gear, tele_gears, ";
+		if(gears)
+			query = query+"active_gear, ground_gear, run_sec, auto_gear, tele_gears, ";
+		if(fuel)
+			query = query+"ground_ball, auto_ball, auto_low, tele_balls, tele_low, acc_scale, ";
+		query = query+"strategy, start_pos, baseline, climb, comments";
+		if(climb)
+			query = query+", climb_time";
+		query = query+")" + "VALUES (\'"+robot_key+"\', \'"+team_key+"\', \'"+drive_train+"\', "
+				+cims_used+", ";
+		if(speed_fps==0)
+			query = query+speed_scaled+", ";
+		else
+			query = query+speed_fps+", ";
+		query = query+shift_gears_int+", "+robot_wt+", "+ball_cap+", "+vision_int+", ";
+		if(gears)
+			query = query+active_gear_int+", "+ground_gear_int+", ";
+		if(gears&&run_sec==0)
+			query = query+run_scale+", ";
+		if(gears&&run_sec!=0)
+			query = query+run_sec+", "+auto_gear_int+", "+tele_gears+", ";
+		if(fuel)
+			query = query+ground_ball_int+", "+auto_ball+", "+auto_low_int+", "+
+					tele_balls+", "+tele_low_int+", "+acc_scale+", ";
+		query = query+strategy+", \'"+start_pos+"\', "+baseline_int+", "+climb_int+", \'"
+				+comments+"\'";
+		if(climb)
+			query = query+", "+climb_time;
+		query = query+")";
+		return query;
+	}
+	
 	private boolean openConnection(){
 		try
 		{
@@ -100,14 +150,27 @@ public class Robot {
 	}
 	
 	private boolean importRobot() {
-		String query = "";
 		try {
 			Statement statement = conn.createStatement();
+			statement.execute(writeQuery());
 			return true;
 		}
 		catch(Exception e){
+			System.err.println(e.getMessage());
 			return false;
 		}
+	}
+	
+	public boolean runImport() {
+		if(!openConnection()) {
+			System.err.println("There was a connection error");
+			return false;
+		}
+		if(!importRobot()) {
+			System.err.println("There was a SQL Query error");
+			return false;
+		}
+		return true;
 	}
 	
 	//General Information
@@ -140,6 +203,10 @@ public class Robot {
 	public void setGearShift() {
 		System.out.println("Enter \"true\" for shifting gearbox, \"false\" for static: ");
 		shift_gears = Boolean.parseBoolean(scanner.nextLine());
+		if(shift_gears)
+			shift_gears_int = 1;
+		else
+			shift_gears_int = 0;
 	}
 	
 	public void setRobotWeight() {
@@ -163,14 +230,22 @@ public class Robot {
 	public void setVision() {
 		System.out.println("Enter \"true\" for vision system, \"false\" for none: ");
 		vision = Boolean.parseBoolean(scanner.nextLine());
-		if(vision)
+		if(vision) {
 			System.out.println("Include details in your comments.");
+			vision_int = 1;
+		}
+		else
+			vision_int = 0;
 	}
 	
 	public void setActiveGear() {
 		if(gears) {
 			System.out.println("Enter \"true\" for active dropoff, \"false\" for passive: ");
 			active_gear = Boolean.parseBoolean(scanner.nextLine());
+			if(active_gear)
+				active_gear_int = 1;
+			else
+				active_gear_int = 0;
 		}
 	}
 	
@@ -178,6 +253,10 @@ public class Robot {
 		if(gears) {
 			System.out.println("Enter \"true\" for ground pickup, \"false\" for none: ");
 			ground_gear = Boolean.parseBoolean(scanner.nextLine());
+			if(ground_gear)
+				ground_gear_int = 1;
+			else
+				ground_gear_int = 0;
 		}
 	}
 	
@@ -217,12 +296,20 @@ public class Robot {
 	public void setBaseline() {
 		System.out.println("Enter \"true\" for baseline cross, \"false\" for none: ");
 		baseline = Boolean.parseBoolean(scanner.nextLine());
+		if(baseline)
+			baseline_int = 1;
+		else
+			baseline_int = 0;
 	}
 	
 	public void setAutoGear() {
 		if(gears) {
 			System.out.println("Enter \"true\" for gear placed in auto, \"false\" for none: ");
 			auto_gear = Boolean.parseBoolean(scanner.nextLine());
+			if(auto_gear)
+				auto_gear_int = 1;
+			else
+				auto_gear_int = 0;
 		}
 	}
 	
@@ -237,6 +324,10 @@ public class Robot {
 		if(fuel&&auto_ball!=0) {
 			System.out.println("Enter \"true\" for low goal, \"false\" for high: ");
 			auto_low = Boolean.parseBoolean(scanner.nextLine());
+			if(auto_low)
+				auto_low_int = 1;
+			else
+				auto_low_int = 0;
 		}
 	}
 	
@@ -260,6 +351,10 @@ public class Robot {
 		if(fuel&&tele_balls!=0) {
 			System.out.println("Enter \"true\" for low goal, \"false\" for high: ");
 			tele_low = Boolean.parseBoolean(scanner.nextLine());
+			if(tele_low)
+				tele_low_int = 1;
+			else
+				tele_low_int = 0;
 		}
 	}
 	
@@ -273,6 +368,10 @@ public class Robot {
 	public void setClimb() {
 		System.out.println("Enter \"true\" for climb, \"false\" for none: ");
 		climb = Boolean.parseBoolean(scanner.nextLine());
+		if(climb)
+			climb_int = 1;
+		else
+			climb_int = 0;
 	}
 	
 	public void setClimbTime() {
