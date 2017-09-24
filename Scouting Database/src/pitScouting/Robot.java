@@ -94,41 +94,59 @@ public class Robot {
 	}
 	
 	private String writeQuery() {
+		//tested
 		String query = "INSERT INTO Pit_Scouting_2017 (robot_key, team_key, drive_train, cims_used, ";
 		if(speed_fps==0)
+			//tested
 			query = query+"speed_scaled, ";
 		else
+			//tested
 			query = query+"speed_fps, ";
+		//tested
 		query = query+"shift_gears, robot_wt, ball_cap, vision, ";
 		if(gears&&run_sec==0)
 			query = query+"active_gear, ground_gear, run_scale, auto_gear, tele_gears, ";
-		if(gears)
+		if(gears&&run_sec!=0)
+			//tested
 			query = query+"active_gear, ground_gear, run_sec, auto_gear, tele_gears, ";
 		if(fuel)
+			//tested
 			query = query+"ground_ball, auto_ball, auto_low, tele_balls, tele_low, acc_scale, ";
+		//tested
 		query = query+"strategy, start_pos, baseline, climb, comments";
 		if(climb)
+			//tested
 			query = query+", climb_time";
+		//tested
 		query = query+")" + "VALUES (\'"+robot_key+"\', \'"+team_key+"\', \'"+drive_train+"\', "
 				+cims_used+", ";
 		if(speed_fps==0)
+			//tested
 			query = query+speed_scaled+", ";
 		else
+			//tested
 			query = query+speed_fps+", ";
+		//tested
 		query = query+shift_gears_int+", "+robot_wt+", "+ball_cap+", "+vision_int+", ";
 		if(gears)
+			//tested
 			query = query+active_gear_int+", "+ground_gear_int+", ";
 		if(gears&&run_sec==0)
-			query = query+run_scale+", ";
+			query = query+run_scale+", "+auto_gear_int+", "+tele_gears+", ";
 		if(gears&&run_sec!=0)
+			//tested
 			query = query+run_sec+", "+auto_gear_int+", "+tele_gears+", ";
 		if(fuel)
+			//tested
 			query = query+ground_ball_int+", "+auto_ball+", "+auto_low_int+", "+
 					tele_balls+", "+tele_low_int+", "+acc_scale+", ";
+		//tested
 		query = query+strategy+", \'"+start_pos+"\', "+baseline_int+", "+climb_int+", \'"
 				+comments+"\'";
 		if(climb)
+			//tested
 			query = query+", "+climb_time;
+		//tested
 		query = query+")";
 		return query;
 	}
